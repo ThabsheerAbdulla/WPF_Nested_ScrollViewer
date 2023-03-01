@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="WPFScrollViewerTest.ChildrenView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFScrollViewerTest"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <Border BorderBrush="RoyalBlue" BorderThickness="2" Margin="2" Padding="1" Background="DarkCyan">
+
+        <!--Preview Mouse Events Tunnel Route from parent to child 
+            thus both have chance to process the event and scroll corresponding view  based on mouse action-->
+        <!--Touch Move need only Bubble Rpoute from child to parent scroll view for the overlapped area
+            rest of the area get touch scrolled on their corresponding axis based on panningmode -->
+        <ScrollViewer CanContentScroll="True" 
+                      PanningMode="VerticalOnly"
+                      HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="Hidden"
+                      PreviewMouseDown="scrollViewer_PreviewMouseLeftButtonDown"
+                      PreviewMouseUp="scrollViewer_PreviewMouseLeftButtonUp"
+                      PreviewMouseMove="scrollViewer_PreviewMouseMove"
+                      TouchMove="ChildscrollViewer_TouchMove"
+                      Name="ChildscrollViewer">
+            <!--Binds With the Internal List: List<int>-->
+                <ItemsControl ItemsSource="{Binding }">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Width="200"
+                                Height="50"
+                                Margin="0 10 0 0"
+                                Background="Turquoise">
+                            <!--Binds With the internal int value of the internal list-->
+                                <TextBlock HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="20"
+                                       Text="{Binding}"/>
+                            </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        
+    </Border>
+</UserControl>
